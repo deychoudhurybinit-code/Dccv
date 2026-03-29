@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware Products</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #filters {
+            margin-bottom: 20px;
+        }
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hardware Products</h1>
+    <div id="filters">
+        <input type="text" id="search" placeholder="Search products...">
+        <select id="category">
+            <option value="">Select Category</option>
+            <!-- Add category options here -->
+        </select>
+        <select id="subcategory">
+            <option value="">Select Subcategory</option>
+            <!-- Add subcategory options here -->
+        </select>
+    </div>
+    <div id="product-list"></div>
+
+    <script>
+        const supabaseUrl = 'https://YOUR_SUPABASE_URL';
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function fetchProducts() {
+            const { data, error } = await supabase
+                .from('hardware_products') // Replace with your actual table name
+                .select('*');
+
+            if (error) {
+                console.error('Error fetching products:', error);
+                return;
+            }
+
+            displayProducts(data);
+        }
+
+        function displayProducts(products) {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = '';
+
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `<h2>${product.name}</h2><p>${product.description}</p><p>Category: ${product.category}</p>`;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        document.getElementById('search').addEventListener('input', fetchProducts);
+        document.getElementById('category').addEventListener('change', fetchProducts);
+        document.getElementById('subcategory').addEventListener('change', fetchProducts);
+
+        fetchProducts();
+    </script>
+</body>
+</html>
