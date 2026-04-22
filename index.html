@@ -3,34 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DCCV Foundation to Plinth Calculator</title>
+    <title>DCCV Calculator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>DCCV Foundation to Plinth Calculator</h1>
-    <form>
-        <label for="foundationDepth">Foundation Depth (m):</label>
-        <input type="number" id="foundationDepth" name="foundationDepth" required><br>
+    <div class="container">
+        <h1>DCCV Calculator</h1>
+        <form id="calc-form">
+            <fieldset>
+                <legend>Excavation Cost</legend>
+                <label for="excavation-volume">Volume (cubic meters):</label>
+                <input type="number" id="excavation-volume" required>
+                <label for="excavation-cost">Cost per cubic meter:</label>
+                <input type="number" id="excavation-cost" required>
+            </fieldset>
 
-        <label for="foundationWidth">Foundation Width (m):</label>
-        <input type="number" id="foundationWidth" name="foundationWidth" required><br>
+            <fieldset>
+                <legend>Compaction Cost</legend>
+                <label for="compaction-volume">Volume (cubic meters):</label>
+                <input type="number" id="compaction-volume" required>
+                <label for="compaction-cost">Cost per cubic meter:</label>
+                <input type="number" id="compaction-cost" required>
+            </fieldset>
 
-        <label for="plinthHeight">Plinth Height (m):</label>
-        <input type="number" id="plinthHeight" name="plinthHeight" required><br>
+            <fieldset>
+                <legend>PCC Cost</legend>
+                <label for="pcc-volume">Volume (cubic meters):</label>
+                <input type="number" id="pcc-volume" required>
+                <label for="pcc-cost">Cost per cubic meter:</label>
+                <input type="number" id="pcc-cost" required>
+            </fieldset>
 
-        <button type="submit">Calculate</button>
-    </form>
+            <fieldset>
+                <legend>Foundation Cost</legend>
+                <label for="foundation-volume">Volume (cubic meters):</label>
+                <input type="number" id="foundation-volume" required>
+                <label for="foundation-cost">Cost per cubic meter:</label>
+                <input type="number" id="foundation-cost" required>
+            </fieldset>
 
-    <div id="result"></div>
+            <fieldset>
+                <legend>Plinth Beam Cost</legend>
+                <label for="plinth-volume">Volume (cubic meters):</label>
+                <input type="number" id="plinth-volume" required>
+                <label for="plinth-cost">Cost per cubic meter:</label>
+                <input type="number" id="plinth-cost" required>
+            </fieldset>
 
-    <script>
-        document.querySelector('form').onsubmit = function(event) {
-            event.preventDefault();
-            const depth = parseFloat(document.getElementById('foundationDepth').value);
-            const width = parseFloat(document.getElementById('foundationWidth').value);
-            const height = parseFloat(document.getElementById('plinthHeight').value);
-            const volume = depth * width * height;
-            document.getElementById('result').innerText = `Volume of material required: ${volume} cubic meters`; 
-        };
-    </script>
+            <fieldset>
+                <legend>Tank Cost</legend>
+                <label for="tank-volume">Volume (cubic meters):</label>
+                <input type="number" id="tank-volume" required>
+                <label for="tank-cost">Cost per cubic meter:</label>
+                <input type="number" id="tank-cost" required>
+            </fieldset>
+
+            <button type="submit">Calculate Total Cost</button>
+        </form>
+        <div id="result">
+            <h2>Total Cost: <span id="total-cost">0</span></h2>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
 </body>
 </html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    text-align: center;
+}
+fieldset {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #218838;
+}
+#result {
+    text-align: center;
+    margin-top: 20px;
+}
+</style>
+
+<script>
+document.getElementById('calc-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const excavationVolume = parseFloat(document.getElementById('excavation-volume').value);
+    const excavationCost = parseFloat(document.getElementById('excavation-cost').value);
+    const compactionVolume = parseFloat(document.getElementById('compaction-volume').value);
+    const compactionCost = parseFloat(document.getElementById('compaction-cost').value);
+    const pccVolume = parseFloat(document.getElementById('pcc-volume').value);
+    const pccCost = parseFloat(document.getElementById('pcc-cost').value);
+    const foundationVolume = parseFloat(document.getElementById('foundation-volume').value);
+    const foundationCost = parseFloat(document.getElementById('foundation-cost').value);
+    const plinthVolume = parseFloat(document.getElementById('plinth-volume').value);
+    const plinthCost = parseFloat(document.getElementById('plinth-cost').value);
+    const tankVolume = parseFloat(document.getElementById('tank-volume').value);
+    const tankCost = parseFloat(document.getElementById('tank-cost').value);
+
+    const totalCost = (excavationVolume * excavationCost) + (compactionVolume * compactionCost) + 
+                      (pccVolume * pccCost) + (foundationVolume * foundationCost) + 
+                      (plinthVolume * plinthCost) + (tankVolume * tankCost);
+
+    document.getElementById('total-cost').innerText = totalCost.toFixed(2);
+});
+</script>
