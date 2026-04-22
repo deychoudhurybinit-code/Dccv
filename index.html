@@ -1,146 +1,287 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DCCV Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <h1>DCCV Calculator</h1>
-        <form id="calc-form">
-            <fieldset>
-                <legend>Excavation Cost</legend>
-                <label for="excavation-volume">Volume (cubic meters):</label>
-                <input type="number" id="excavation-volume" required>
-                <label for="excavation-cost">Cost per cubic meter:</label>
-                <input type="number" id="excavation-cost" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Compaction Cost</legend>
-                <label for="compaction-volume">Volume (cubic meters):</label>
-                <input type="number" id="compaction-volume" required>
-                <label for="compaction-cost">Cost per cubic meter:</label>
-                <input type="number" id="compaction-cost" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>PCC Cost</legend>
-                <label for="pcc-volume">Volume (cubic meters):</label>
-                <input type="number" id="pcc-volume" required>
-                <label for="pcc-cost">Cost per cubic meter:</label>
-                <input type="number" id="pcc-cost" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Foundation Cost</legend>
-                <label for="foundation-volume">Volume (cubic meters):</label>
-                <input type="number" id="foundation-volume" required>
-                <label for="foundation-cost">Cost per cubic meter:</label>
-                <input type="number" id="foundation-cost" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Plinth Beam Cost</legend>
-                <label for="plinth-volume">Volume (cubic meters):</label>
-                <input type="number" id="plinth-volume" required>
-                <label for="plinth-cost">Cost per cubic meter:</label>
-                <input type="number" id="plinth-cost" required>
-            </fieldset>
-
-            <fieldset>
-                <legend>Tank Cost</legend>
-                <label for="tank-volume">Volume (cubic meters):</label>
-                <input type="number" id="tank-volume" required>
-                <label for="tank-cost">Cost per cubic meter:</label>
-                <input type="number" id="tank-cost" required>
-            </fieldset>
-
-            <button type="submit">Calculate Total Cost</button>
-        </form>
-        <div id="result">
-            <h2>Total Cost: <span id="total-cost">0</span></h2>
-        </div>
-    </div>
-    <script src="scripts.js"></script>
-</body>
-</html>
+<title>DCCV Calculation</title>
 
 <style>
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
+    font-family: 'Segoe UI';
     padding: 20px;
+    line-height: 1.7;
 }
-.container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-h1 {
+
+h2 {
     text-align: center;
 }
-fieldset {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-}
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+
 input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
+    width: 70px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #218838;
-}
-#result {
+    border-bottom: 1px solid black;
     text-align: center;
+}
+
+.section {
     margin-top: 20px;
 }
+
+hr {
+    margin: 15px 0;
+}
+
+/* only added for summary table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 6px;
+}
 </style>
+</head>
+
+<body>
+
+<h2>🏗️ DCCV – FOUNDATION TO PLINTH (DETAILED CALCULATION FORMAT)</h2>
+
+<!-- EXCAVATION -->
+<div class="section">
+<b>🔹 1. EXCAVATION</b><br><br>
+
+No. of Units: <input id="ex_no"><br><br>
+
+Length: <input id="ex_l">
+Breadth: <input id="ex_b">
+Depth: <input id="ex_d"><br><br>
+
+Total CFT = <span id="ex_cft">0</span><br><br>
+
+Rate: ₹ <input id="ex_rate"><br><br>
+
+Total Cost = ₹ <span id="ex_cost">0</span>
+</div>
+
+<!-- COMPACTION -->
+<div class="section">
+<b>🔹 2. COMPACTION</b><br><br>
+
+Area: <input id="comp_area"><br>
+Rate: ₹ <input id="comp_rate"><br><br>
+
+Total = ₹ <span id="comp_total">0</span>
+</div>
+
+<!-- PCC -->
+<div class="section">
+<b>🔹 3. PCC</b><br><br>
+
+No. of Units: <input id="pcc_no"><br><br>
+
+Length: <input id="pcc_l">
+Breadth: <input id="pcc_b">
+Thickness: <input id="pcc_t"><br><br>
+
+Total CFT = <span id="pcc_cft">0</span><br><br>
+
+Rate: ₹ <input id="pcc_rate"><br><br>
+
+Total = ₹ <span id="pcc_total">0</span>
+</div>
+
+<!-- FOUNDATION -->
+<div class="section">
+<b>🔹 4. FOUNDATION</b><br><br>
+
+No. of Units: <input id="f_no"><br><br>
+
+Length: <input id="f_l">
+Breadth: <input id="f_b">
+Depth: <input id="f_d"><br><br>
+
+Total CFT = <span id="f_cft">0</span><br><br>
+
+<b>Material Breakdown</b><br><br>
+
+Cement: <input id="cement_qty"> × ₹ <input id="cement_rate"> = ₹ <span id="cement_total">0</span><br>
+Steel: <input id="steel_qty"> × ₹ <input id="steel_rate"> = ₹ <span id="steel_total">0</span><br>
+Sand: <input id="sand_qty"> × ₹ <input id="sand_rate"> = ₹ <span id="sand_total">0</span><br>
+Stone: <input id="stone_qty"> × ₹ <input id="stone_rate"> = ₹ <span id="stone_total">0</span><br><br>
+
+<b>Execution Cost</b><br><br>
+
+Labour: ₹ <input id="labour"><br>
+Shuttering: ₹ <input id="shuttering"><br><br>
+
+Misc (3%): ₹ <span id="misc">0</span><br><br>
+
+Total Foundation Cost = ₹ <span id="foundation_total">0</span>
+</div>
+
+<!-- PLINTH BEAM -->
+<div class="section">
+<b>🔹 5. PLINTH BEAM</b><br><br>
+
+No. of Units: <input id="pl_no"><br><br>
+
+Length: <input id="pl_l">
+Width: <input id="pl_b">
+Depth: <input id="pl_d"><br><br>
+
+Total CFT = <span id="pl_cft">0</span><br><br>
+
+<b>Material Breakdown</b><br><br>
+
+Cement: <input id="pl_cement_qty"> × ₹ <input id="pl_cement_rate"> = ₹ <span id="pl_cement_total">0</span><br>
+Steel: <input id="pl_steel_qty"> × ₹ <input id="pl_steel_rate"> = ₹ <span id="pl_steel_total">0</span><br>
+Sand: <input id="pl_sand_qty"> × ₹ <input id="pl_sand_rate"> = ₹ <span id="pl_sand_total">0</span><br>
+Stone: <input id="pl_stone_qty"> × ₹ <input id="pl_stone_rate"> = ₹ <span id="pl_stone_total">0</span><br><br>
+
+<b>Execution Cost</b><br><br>
+
+Labour: ₹ <input id="pl_labour"><br>
+Shuttering: ₹ <input id="pl_shuttering"><br><br>
+
+Total Plinth Cost = ₹ <span id="pl_total">0</span>
+</div>
+
+<!-- TANK -->
+<div class="section">
+<b>🔹 6. TANK MAKING COST</b><br><br>
+
+Total = ₹ <input id="tank_cost">
+</div>
+
+<!-- FINAL SUMMARY (only this block changed to table) -->
+<div class="section">
+<b>💰 FINAL SUMMARY (INTERNAL)</b><br><br>
+
+<table>
+<tr>
+<th>Sr No</th>
+<th>Description</th>
+<th>Amount (₹)</th>
+</tr>
+
+<tr><td>1</td><td>Excavation</td><td id="sum_ex">0</td></tr>
+<tr><td>2</td><td>Compaction</td><td id="sum_comp">0</td></tr>
+<tr><td>3</td><td>PCC</td><td id="sum_pcc">0</td></tr>
+<tr><td>4</td><td>Foundation</td><td id="sum_found">0</td></tr>
+<tr><td>5</td><td>Plinth Beam</td><td id="sum_pl">0</td></tr>
+<tr><td>6</td><td>Tank</td><td id="sum_tank">0</td></tr>
+
+<tr>
+<td colspan="2"><b>Subtotal</b></td>
+<td id="subtotal">0</td>
+</tr>
+
+<tr><td></td><td>Adjustment (5%)</td><td id="adj">0</td></tr>
+<tr><td></td><td>Profit (5%)</td><td id="profit">0</td></tr>
+<tr><td></td><td>Management (3%)</td><td id="management">0</td></tr>
+
+<tr>
+<td colspan="2"><b>FINAL PROJECT VALUE</b></td>
+<td id="final">0</td>
+</tr>
+</table>
+
+</div>
+
+<br>
+<button onclick="calc()">Calculate</button>
+<button onclick="window.print()">Download PDF</button>
 
 <script>
-document.getElementById('calc-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const excavationVolume = parseFloat(document.getElementById('excavation-volume').value);
-    const excavationCost = parseFloat(document.getElementById('excavation-cost').value);
-    const compactionVolume = parseFloat(document.getElementById('compaction-volume').value);
-    const compactionCost = parseFloat(document.getElementById('compaction-cost').value);
-    const pccVolume = parseFloat(document.getElementById('pcc-volume').value);
-    const pccCost = parseFloat(document.getElementById('pcc-cost').value);
-    const foundationVolume = parseFloat(document.getElementById('foundation-volume').value);
-    const foundationCost = parseFloat(document.getElementById('foundation-cost').value);
-    const plinthVolume = parseFloat(document.getElementById('plinth-volume').value);
-    const plinthCost = parseFloat(document.getElementById('plinth-cost').value);
-    const tankVolume = parseFloat(document.getElementById('tank-volume').value);
-    const tankCost = parseFloat(document.getElementById('tank-cost').value);
+function v(id){ return parseFloat(document.getElementById(id).value)||0 }
 
-    const totalCost = (excavationVolume * excavationCost) + (compactionVolume * compactionCost) + 
-                      (pccVolume * pccCost) + (foundationVolume * foundationCost) + 
-                      (plinthVolume * plinthCost) + (tankVolume * tankCost);
+function calc(){
 
-    document.getElementById('total-cost').innerText = totalCost.toFixed(2);
-});
+// Excavation
+let ex_cft = v("ex_l")*v("ex_b")*v("ex_d")*v("ex_no")
+let ex_cost = ex_cft*v("ex_rate")
+
+// Compaction
+let comp = v("comp_area")*v("comp_rate")
+
+// PCC
+let pcc_cft = v("pcc_l")*v("pcc_b")*v("pcc_t")*v("pcc_no")
+let pcc = pcc_cft*v("pcc_rate")
+
+// Foundation
+let f_cft = v("f_l")*v("f_b")*v("f_d")*v("f_no")
+
+let cement = v("cement_qty")*v("cement_rate")
+let steel = v("steel_qty")*v("steel_rate")
+let sand = v("sand_qty")*v("sand_rate")
+let stone = v("stone_qty")*v("stone_rate")
+
+let base = cement+steel+sand+stone+v("labour")+v("shuttering")
+let misc = base*0.03
+let foundation = base+misc
+
+// Plinth
+let pl_cft = v("pl_l")*v("pl_b")*v("pl_d")*v("pl_no")
+
+let pl_base =
+v("pl_cement_qty")*v("pl_cement_rate") +
+v("pl_steel_qty")*v("pl_steel_rate") +
+v("pl_sand_qty")*v("pl_sand_rate") +
+v("pl_stone_qty")*v("pl_stone_rate") +
+v("pl_labour") +
+v("pl_shuttering")
+
+let pl_total = pl_base + pl_base*0.03
+
+// Tank
+let tank = v("tank_cost")
+
+// Final Calculation
+let subtotal = ex_cost+comp+pcc+foundation+pl_total+tank
+
+let adj = subtotal * 0.05
+let afterAdj = subtotal + adj
+
+let profit = afterAdj * 0.05   // changed to 5%
+let afterProfit = afterAdj + profit
+
+let management = afterProfit * 0.03
+
+let final = afterProfit + management
+
+// OUTPUT
+document.getElementById("ex_cft").innerText=ex_cft
+document.getElementById("ex_cost").innerText=ex_cost
+document.getElementById("comp_total").innerText=comp
+document.getElementById("pcc_cft").innerText=pcc_cft
+document.getElementById("pcc_total").innerText=pcc
+document.getElementById("f_cft").innerText=f_cft
+document.getElementById("cement_total").innerText=cement
+document.getElementById("steel_total").innerText=steel
+document.getElementById("sand_total").innerText=sand
+document.getElementById("stone_total").innerText=stone
+document.getElementById("misc").innerText=misc
+document.getElementById("foundation_total").innerText=foundation
+
+document.getElementById("pl_cft").innerText=pl_cft
+document.getElementById("pl_total").innerText=pl_total
+
+document.getElementById("sum_ex").innerText=ex_cost
+document.getElementById("sum_comp").innerText=comp
+document.getElementById("sum_pcc").innerText=pcc
+document.getElementById("sum_found").innerText=foundation
+document.getElementById("sum_pl").innerText=pl_total
+document.getElementById("sum_tank").innerText=tank
+
+document.getElementById("subtotal").innerText=subtotal
+document.getElementById("adj").innerText=adj
+document.getElementById("profit").innerText=profit
+document.getElementById("management").innerText=management
+document.getElementById("final").innerText=Math.round(final)
+
+}
 </script>
+
+</body>
+</html>
